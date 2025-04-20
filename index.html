@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <title>Overlay Demo</title>
+  <title>Invisible Button Overlay</title>
   <style>
     body {
       margin: 0;
@@ -21,15 +21,16 @@
       border: none;
     }
 
-    .overlay-box {
+    .overlay-button {
       position: absolute;
       top: 30px;
       right: 50px;
-      background-color: white;
-      border: 1px solid #ccc;
-      padding: 10px;
+      width: 300px;          /* Kéo dài sang trái */
+      height: 60px;
+      background: transparent;
+      border: none;
       z-index: 10;
-      box-shadow: 0 0 5px rgba(0,0,0,0.2);
+      cursor: pointer;
     }
   </style>
 </head>
@@ -38,9 +39,7 @@
   <div class="container">
     <iframe src="https://figuri.shop"></iframe>
 
-    <div class="overlay-box">
-      <p>Đăng nhập</p>
-    </div>
+    <button class="overlay-button" onclick="alert('Bạn đã bấm vào vùng overlay!')"></button>
   </div>
 
 </body>
