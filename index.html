@@ -129,6 +129,11 @@
       // Ẩn form sau khi submit
       hideLogin();
     });
+
+    // Đảm bảo overlay có thể click để ẩn form
+    document.getElementById('overlayBg').addEventListener('click', function() {
+      hideLogin();
+    });
   </script>
 
 </body>
